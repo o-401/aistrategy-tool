@@ -1,11 +1,16 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { type ComprehensiveDiagnosis, type Question, type UserInputData, type TeamBuildingResult, type DepartmentRecommendation, type AppMode } from '../types';
 
-if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable is not set.");
+// 1. Viteの正しい方法で環境変数を読み込む
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+// 2. APIキーが存在するかチェックする
+if (!apiKey) {
+    throw new Error("VITE_GEMINI_API_KEY environment variable is not set. Please set it in your Vercel project settings.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// 3. 修正したapiKeyを使って、AIクライアントを初期化する
+const genAI = new GoogleGenerativeAI(apiKey);
 
 const mbtiDiagnosisPrompt = `
 あなたは、経験豊富なMBTIのエキスパートです。ユーザーが回答した8つの質問と回答を分析し、
