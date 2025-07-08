@@ -1,6 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+console.log("--- Vercel Environment Debug ---");
+console.log("Raw value of import.meta.env.VITE_GEMINI_API_KEY:", import.meta.env.VITE_GEMINI_API_KEY);
+
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+console.log("Is apiKey variable truthy?", !!apiKey);
 
 if (!apiKey) {
   throw new Error("VITE_GEMINI_API_KEY environment variable is not set.");
